@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  darknet:
+    image: darknet-hankai
+    build: .
+    container_name: darknet-container
+    runtime: nvidia  
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
+      - PATH=/usr/local/cuda/bin:${PATH}
+      - LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu/
+    volumes:
+      - ./videosImg:/workspace/videosImg  # Montar carpeta de imágenes/videos
+    stdin_open: true
+    tty: true
