@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   darknet:
-    image: darknet-hankai
+    image: darknet-hankai2
     build: .
     container_name: darknet-container
     runtime: nvidia  
@@ -16,9 +16,23 @@ services:
     environment:
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-      - PATH=/usr/local/cuda/bin:${PATH}
-      - LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/lib/x86_64-linux-gnu/
+      - QT_XCB_GL_INTEGRATION=none  # Necesario para DarkMark
+      - DISPLAY=${DISPLAY}  # Permitir GUI de DarkMark en la máquina host
     volumes:
-      - ./data:/workspace/data  # Montar carpeta de imágenes/videos
+      - ./data:/darknet/data  # Montar carpeta de imágenes/videos
+      - /tmp/.X11-unix:/tmp/.X11-unix  # Permitir GUI en el contenedor
+      - type: bind  # Solo montar los repositorios sin sobrescribir la compilación
+        source: ./darknet
+        target: /darknet
+        consistency: delegated
+      - type: bind
+        source: ./darkhelp
+        target: /darkhelp
+        consistency: delegated
+      - type: bind
+        source: ./darkmark
+        target: /darkmark
+        consistency: delegated
     stdin_open: true
     tty: true
+    command: ["/bin/bash"]

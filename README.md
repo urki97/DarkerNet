@@ -6,7 +6,8 @@ docker-compose up -d
 
 
 Ejecutar el contenedor:
-docker exec -it darknet-container bash
+docker exec -it darknet-container /bin/bash
+
 darknet version                         #Ver la version obviamente.
 
     Ejecutar deteccion de una imagen
@@ -31,3 +32,15 @@ comandos que si funcionan:
 
 darknet_04_process_videos /workspace/darknet/cfg/yolov4.cfg /workspace/videosImg/test.mp4 /workspace/darknet/yolov4.weights
 darknet_05_process_videos_multithreaded /workspace/darknet/cfg/yolov4.cfg /workspace/videosImg/test.mp4 /workspace/darknet/yolov4.weights
+
+
+AÑADIR AL README:
+
+GPU	Arquitectura        CUDA
+GTX 10xx (Pascal)	    61
+RTX 20xx (Turing)	    75
+RTX 30xx (Ampere)	    86
+RTX 40xx (Ada Lovelace)	89
+Tesla V100 (Volta)	    70
+Tesla A100 (Ampere)	    80
+Tesla H100 (Hopper)	    90
